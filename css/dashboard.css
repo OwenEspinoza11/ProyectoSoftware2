@@ -1,0 +1,466 @@
+/* Reset y base */
+body,
+html {
+    margin: 0;
+    padding: 0;
+    font-family: 'Segoe UI', Arial, sans-serif;
+    background: #f4f6f8;
+    color: #222;
+    height: 100%;
+}
+
+.dashboard-container {
+    display: flex;
+    min-height: 100vh;
+}
+
+/* Sidebar */
+.sidebar {
+    background: #222e3c;
+    color: #fff;
+    width: 230px;
+    min-height: 100vh;
+    padding: 30px 0 0 0;
+    box-shadow: 2px 0 8px rgba(0, 0, 0, 0.04);
+    position: relative;
+}
+
+.sidebar h2 {
+    text-align: center;
+    margin-bottom: 30px;
+    font-size: 1.6em;
+    letter-spacing: 1px;
+    font-weight: 700;
+}
+
+.sidebar ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.sidebar ul li {
+    padding: 15px 30px;
+    cursor: pointer;
+    transition: background 0.2s, color 0.2s;
+    font-size: 1.05em;
+    border-left: 4px solid transparent;
+}
+
+.sidebar ul li:hover,
+.sidebar ul li.active {
+    background: #1a2230;
+    color: #4fc3f7;
+    border-left: 4px solid #4fc3f7;
+}
+
+/* Main content */
+.main-content {
+    flex: 1;
+    padding: 40px 30px;
+    background: #f4f6f8;
+    min-width: 0;
+}
+
+.main-content h1 {
+    font-size: 2.2em;
+    margin-bottom: 20px;
+    color: #222e3c;
+    font-weight: 700;
+}
+
+.seccion {
+    background: #fff;
+    border-radius: 10px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+    padding: 30px 25px;
+    margin-bottom: 30px;
+    animation: fadeIn 0.4s;
+    display: block;
+}
+
+.seccion:not(:first-child) {
+    margin-top: 20px;
+}
+
+.seccion h2 {
+    color: #222e3c;
+    margin-top: 0;
+    margin-bottom: 18px;
+    font-size: 1.4em;
+    font-weight: 600;
+}
+
+/* Formularios */
+form {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px 24px;
+    align-items: flex-end;
+    margin-bottom: 18px;
+    background: transparent;
+}
+
+form label {
+    flex: 1 1 160px;
+    min-width: 120px;
+    font-weight: 500;
+    color: #222e3c;
+    margin-bottom: 4px;
+}
+
+form input[type="text"],
+form input[type="email"],
+form input[type="number"],
+form input[type="password"],
+form input[type="date"],
+form select {
+    flex: 2 1 220px;
+    padding: 8px 10px;
+    border: 1px solid #cfd8dc;
+    border-radius: 5px;
+    font-size: 1em;
+    background: #f9f9fb;
+    margin-bottom: 8px;
+}
+
+form input[type="checkbox"] {
+    margin-left: 8px;
+    margin-right: 8px;
+}
+
+form button[type="submit"],
+form button {
+    padding: 10px 28px;
+    background: #4fc3f7;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    font-weight: 600;
+    font-size: 1em;
+    cursor: pointer;
+    margin-top: 10px;
+    transition: background 0.2s;
+}
+
+form button[type="submit"]:hover,
+form button:hover {
+    background: #039be5;
+}
+
+/* Tablas */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 18px;
+    background: #fafbfc;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.03);
+}
+
+table thead {
+    background: #e3e8ee;
+}
+
+table th,
+table td {
+    padding: 10px 8px;
+    text-align: left;
+    border-bottom: 1px solid #e3e8ee;
+    font-size: 1em;
+}
+
+table th {
+    color: #222e3c;
+    font-weight: 600;
+}
+
+table tr:last-child td {
+    border-bottom: none;
+}
+
+table tbody tr:hover {
+    background: #f0f7fa;
+}
+
+/* Botón cerrar sesión */
+#seccionCuenta button {
+    background: #e57373;
+    color: #fff;
+    margin-top: 18px;
+}
+
+#seccionCuenta button:hover {
+    background: #c62828;
+}
+
+/* Animación de aparición */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Responsive */
+@media (max-width: 1100px) {
+    .main-content {
+        padding: 20px 8px;
+    }
+
+    .seccion {
+        padding: 18px 6px;
+    }
+
+    form label,
+    form input,
+    form select,
+    form button {
+        min-width: 0;
+    }
+}
+
+@media (max-width: 900px) {
+    .dashboard-container {
+        flex-direction: column;
+    }
+
+    .sidebar {
+        width: 100%;
+        min-height: unset;
+        box-shadow: none;
+        padding: 15px 0 0 0;
+    }
+
+    .main-content {
+        padding: 12px 2vw;
+    }
+}
+
+@media (max-width: 600px) {
+    .sidebar ul li {
+        padding: 12px 16px;
+        font-size: 1em;
+    }
+
+    .main-content h1 {
+        font-size: 1.3em;
+    }
+
+    .seccion {
+        padding: 10px 2px;
+    }
+
+    form {
+        flex-direction: column;
+        gap: 8px 0;
+    }
+
+    form label,
+    form input,
+    form select,
+    form button {
+        flex: 1 1 100%;
+        min-width: 0;
+    }
+
+    table th,
+    table td {
+        font-size: 0.95em;
+        padding: 7px 4px;
+    }
+}
+
+.reportes-dashboard {
+    display: flex;
+    gap: 20px;
+    justify-content: center;
+    margin-bottom: 30px;
+    flex-wrap: wrap;
+}
+
+.reporte-card {
+    background: #f8f9fc;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px #0001;
+    padding: 20px 30px;
+    text-align: center;
+    min-width: 160px;
+}
+
+.reporte-card h3 {
+    margin: 0 0 10px 0;
+    font-size: 1.1em;
+    color: #4e73df;
+}
+
+.reporte-card span {
+    font-size: 2em;
+    font-weight: bold;
+    color: #222;
+}
+
+/* Asegura que las tablas no se desborden */
+#seccionProductos table {
+    width: 100%;
+    max-width: 100%;
+    overflow-x: auto;
+    display: block;
+}
+
+/* Ajusta el formulario para que no se desborde ni se apile raro */
+#seccionProductos form {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px 24px;
+    align-items: flex-end;
+    margin-bottom: 18px;
+    background: transparent;
+}
+
+#seccionProductos form label {
+    flex: 1 1 160px;
+    min-width: 120px;
+}
+
+#seccionProductos form input,
+#seccionProductos form select {
+    flex: 2 1 220px;
+    min-width: 100px;
+}
+
+#seccionProductos form button {
+    flex: 1 1 120px;
+    min-width: 100px;
+}
+
+/* Siempre en cascada para formularios con muchos campos */
+#seccionProductos form,
+#seccionCategorias form,
+#seccionClientes form,
+#seccionColaboradores form,
+#seccionProveedores form,
+#seccionMembresias form,
+#seccionCompras form,
+#seccionVentas form,
+#seccionDevoluciones form,
+#seccionUsuarios form,
+#seccionCategoriaMembresia form {
+    flex-direction: column;
+    gap: 10px 0;
+}
+
+#seccionProductos form label,
+#seccionCategorias form label,
+#seccionClientes form label,
+#seccionColaboradores form label,
+#seccionProveedores form label,
+#seccionMembresias form label,
+#seccionCompras form label,
+#seccionVentas form label,
+#seccionDevoluciones form label,
+#seccionUsuarios form label,
+#seccionCategoriaMembresia form label,
+#seccionProductos form input,
+#seccionCategorias form input,
+#seccionClientes form input,
+#seccionColaboradores form input,
+#seccionProveedores form input,
+#seccionMembresias form input,
+#seccionCompras form input,
+#seccionVentas form input,
+#seccionDevoluciones form input,
+#seccionUsuarios form input,
+#seccionCategoriaMembresia form input,
+#seccionProductos form select,
+#seccionCategorias form select,
+#seccionClientes form select,
+#seccionColaboradores form select,
+#seccionProveedores form select,
+#seccionMembresias form select,
+#seccionCompras form select,
+#seccionVentas form select,
+#seccionDevoluciones form select,
+#seccionUsuarios form select,
+#seccionCategoriaMembresia form select,
+#seccionProductos form button,
+#seccionCategorias form button,
+#seccionClientes form button,
+#seccionColaboradores form button,
+#seccionProveedores form button,
+#seccionMembresias form button,
+#seccionCompras form button,
+#seccionVentas form button,
+#seccionDevoluciones form button,
+#seccionUsuarios form button,
+#seccionCategoriaMembresia form button {
+    flex: 1 1 100%;
+    min-width: 0;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.btn-editar {
+    background-color: #1976d2;
+    color: #fff;
+    border: none;
+    padding: 5px 12px;
+    border-radius: 4px;
+    cursor: pointer;
+    margin-right: 5px;
+    transition: background 0.2s;
+}
+
+.btn-editar:hover {
+    background-color: #1565c0;
+}
+
+.btn-eliminar {
+    background-color: #d32f2f;
+    color: #fff;
+    border: none;
+    padding: 5px 12px;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+.btn-eliminar:hover {
+    background-color: #b71c1c;
+}
+
+#seccionUsuarios table th,
+#seccionUsuarios table td {
+    white-space: nowrap;
+    text-align: center;
+    vertical-align: middle;
+}
+
+#seccionUsuarios table th:nth-child(7), /* Columna Rol */
+#seccionUsuarios table td:nth-child(7) {
+    max-width: 120px;
+    min-width: 100px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+#seccionUsuarios table th:last-child,
+#seccionUsuarios table td:last-child {
+    min-width: 120px;
+    width: 1%;
+}
+
+#seccionUsuarios .acciones-btn {
+    display: inline-block;
+    margin: 0 2px;
+    padding: 2px 6px;
+    font-size: 0.9em;
+    max-width: 40px;
+    white-space: nowrap;
+}

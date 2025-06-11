@@ -1,0 +1,534 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Panel Principal - Israel Gym</title>
+    <link rel="stylesheet" href="/css/dashboard.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+
+<body>
+    <div class="dashboard-container">
+        <aside class="sidebar">
+            <h2>Israel Gym</h2>
+            <ul>
+                <li onclick="mostrarSeccion('seccionInicio')">Inicio</li>
+                <li onclick="mostrarSeccion('seccionProductos')">Productos</li>
+                <li onclick="mostrarSeccion('seccionCategorias')">Categorias</li>
+                <li onclick="mostrarSeccion('seccionClientes')">Clientes</li>
+                <li onclick="mostrarSeccion('seccionColaboradores')">Colaboradores</li>
+                <li onclick="mostrarSeccion('seccionProveedores')">Proveedores</li>
+                <li onclick="mostrarSeccion('seccionCategoriaMembresia')">Categoria membresías</li>
+                <li onclick="mostrarSeccion('seccionMembresias')">Membresías</li>
+                <li onclick="mostrarSeccion('seccionCompras')">Compras</li>
+                <li onclick="mostrarSeccion('seccionVentas')">Ventas</li>
+                <li onclick="mostrarSeccion('seccionDevoluciones')">Devoluciones</li>
+                <li onclick="mostrarSeccion('seccionRoles')">Roles</li>
+                <li onclick="mostrarSeccion('seccionUsuarios')">Usuarios</li>
+                <li onclick="mostrarSeccion('seccionCuenta')">Mi Cuenta</li>
+            </ul>
+        </aside>
+
+        <main class="main-content">
+            <h1>Panel Principal</h1>
+
+            <!-- INICIO -->
+            <section id="seccionInicio" class="seccion">
+                <h2>Inicio</h2>
+                <div class="reportes-dashboard">
+                    <div class="reporte-card">
+                        <h3>Total de Clientes</h3>
+                        <span id="totalClientes">...</span>
+                    </div>
+                    <div class="reporte-card">
+                        <h3>Total de Productos</h3>
+                        <span id="totalProductos">...</span>
+                    </div>
+                    <div class="reporte-card">
+                        <h3>Total de Ventas</h3>
+                        <span id="totalVentas">...</span>
+                    </div>
+                    <div class="reporte-card">
+                        <h3>Total de Compras</h3>
+                        <span id="totalCompras">...</span>
+                    </div>
+                    <div class="reporte-card">
+                        <h3>Total de Devoluciones</h3>
+                        <span id="totalDevoluciones">...</span>
+                    </div>
+                </div>
+                <div style="max-width:600px;margin:30px auto;">
+                    <canvas id="graficoVentasMes"></canvas>
+                </div>
+            </section>
+
+            <!-- PRODUCTOS -->
+            <section id="seccionProductos" class="seccion">
+                <h2>Productos</h2>
+                <form>
+                    <label>Nombre: <input type="text" name="nombreProducto"></label>
+                    <label>Categoría: <input type="text" name="categoria"></label>
+                    <label>Precio: <input type="number" name="precio"></label>
+                    <label>Stock: <input type="number" name="stock"></label>
+                    <button type="submit">Agregar</button>
+                </form>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Nombre</th>
+                            <th>Categoría</th>
+                            <th>Precio</th>
+                            <th>Stock</th>
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- Filas generadas por JS -->
+                    </tbody>
+                </table>
+            </section>
+
+            <!-- CATEGORÍAS DE PRODUCTO -->
+            <section id="seccionCategorias" class="seccion">
+                <h2>Categorías de Producto</h2>
+                <form>
+                    <input type="hidden" name="idCategoria">
+                    <label>Nombre:</label>
+                    <input type="text" name="nombreCategoria">
+                    <button type="submit">Guardar</button>
+                </form>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Nombre</th>
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+            </section>
+
+            <!-- CLIENTES -->
+            <section id="seccionClientes" class="seccion">
+                <h2>Clientes</h2>
+                <form>
+                    <input type="hidden" name="idCliente">
+                    <label>Primer Nombre:</label>
+                    <input type="text" name="primerNomCliente">
+                    <label>Segundo Nombre:</label>
+                    <input type="text" name="segundoNomCliente">
+                    <label>Primer Apellido:</label>
+                    <input type="text" name="primerApeCliente">
+                    <label>Segundo Apellido:</label>
+                    <input type="text" name="segApeCliente">
+                    <label>Teléfono:</label>
+                    <input type="text" name="telefCliente">
+                    <label>Email:</label>
+                    <input type="email" name="emailCliente">
+                    <label>Dirección:</label>
+                    <input type="text" name="direccionCliente">
+                    <label>Estado:</label>
+                    <select name="Estado" required>
+                        <option value="ACTIVO">ACTIVO</option>
+                        <option value="INACTIVO">INACTIVO</option>
+                    </select>
+                    <button type="submit">Guardar</button>
+                </form>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Primer Nombre</th>
+                            <th>Segundo Nombre</th>
+                            <th>Primer Apellido</th>
+                            <th>Segundo Apellido</th>
+                            <th>Teléfono</th>
+                            <th>Email</th>
+                            <th>Dirección</th>
+                            <th>Estado</th>
+                            <th>Fecha Registro</th>
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+            </section>
+
+            <!-- COLABORADORES -->
+            <section id="seccionColaboradores" class="seccion">
+                <h2>Colaboradores</h2>
+                <form>
+                    <input type="hidden" name="idColaborador">
+                    <label>Usuario:</label>
+                    <select name="idUsuario" id="idUsuarioColab" required>
+                        <option value="">Seleccione un usuario</option>
+                    </select>
+                    <label>Primer Nombre:</label>
+                    <input type="text" name="primerNombreColab">
+                    <label>Segundo Nombre:</label>
+                    <input type="text" name="segundoNombreColab">
+                    <label>Primer Apellido:</label>
+                    <input type="text" name="primerApellidoColab">
+                    <label>Segundo Apellido:</label>
+                    <input type="text" name="segundoApellidoColab">
+                    <label>Teléfono:</label>
+                    <input type="text" name="telefColab">
+                    <label>Email:</label>
+                    <input type="email" name="emailColab">
+                    <label>Dirección:</label>
+                    <input type="text" name="direccionColab">
+                    <label>Fecha Ingreso:</label>
+                    <input type="date" name="fechaIngreso">
+                    <label>Cargo:</label>
+                    <input type="text" name="cargoColab">
+                    <label>Estado:</label>
+                    <select name="Estado" required>
+                        <option value="ACTIVO">ACTIVO</option>
+                        <option value="INACTIVO">INACTIVO</option>
+                    </select>
+                    <button type="submit">Guardar</button>
+                </form>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Usuario</th>
+                            <th>Primer Nombre</th>
+                            <th>Segundo Nombre</th>
+                            <th>Primer Apellido</th>
+                            <th>Segundo Apellido</th>
+                            <th>Teléfono</th>
+                            <th>Email</th>
+                            <th>Dirección</th>
+                            <th>Fecha Ingreso</th>
+                            <th>Cargo</th>
+                            <th>Estado</th>
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody id="cuerpoTablaColaboradores"></tbody>
+                </table>
+            </section>
+
+            <!-- PROVEEDORES -->
+            <section id="seccionProveedores" class="seccion">
+                <h2>Proveedores</h2>
+                <form>
+                    <input type="hidden" name="idProveedor">
+                    <label>Nombre:</label>
+                    <input type="text" name="nombreProveedor">
+                    <label>Teléfono:</label>
+                    <input type="text" name="telefProveedor">
+                    <label>Dirección:</label>
+                    <input type="text" name="direccProveedor">
+                    <label>Estado:</label>
+                    <select name="Estado" required>
+                        <option value="ACTIVO">ACTIVO</option>
+                        <option value="INACTIVO">INACTIVO</option>
+                    </select>
+                    <button type="submit">Guardar</button>
+                </form>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Nombre</th>
+                            <th>Teléfono</th>
+                            <th>Dirección</th>
+                            <th>Estado</th>
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+            </section>
+
+            <!-- CATEGORÍA MEMBRESÍA -->
+            <section id="seccionCategoriaMembresia" class="seccion">
+                <h2>Categoría Membresía</h2>
+                <form>
+                    <input type="hidden" name="idCatMembresia">
+                    <label>Nombre:</label>
+                    <input type="text" name="nombreCatMemb">
+                    <button type="submit">Guardar</button>
+                </form>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Nombre</th>
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+            </section>
+
+            <!-- MEMBRESÍAS -->
+            <section id="seccionMembresias" class="seccion">
+                <h2>Membresías</h2>
+                <form>
+                    <input type="hidden" name="idMembresia">
+                    <label>Categoría:</label>
+                    <select name="idCatMembresia"></select>
+                    <label>Descripción:</label>
+                    <input type="text" name="descripcion">
+                    <label>Duración (días):</label>
+                    <input type="number" name="duracionMembresia">
+                    <label>Precio:</label>
+                    <input type="number" name="precioMembresia" step="0.01">
+                    <button type="submit">Guardar</button>
+                </form>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Categoría</th>
+                            <th>Descripción</th>
+                            <th>Duración</th>
+                            <th>Precio</th>
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+            </section>
+
+            <!-- COMPRAS -->
+            <section id="seccionCompras" class="seccion">
+                <h2>Compras</h2>
+                <form>
+                    <input type="hidden" name="idCompra">
+                    <label>Colaborador:</label>
+                    <select name="idColaborador"></select>
+                    <label>Fecha:</label>
+                    <input type="date" name="fechaCompra">
+                    <label>Total:</label>
+                    <input type="number" name="totalCompra" step="0.01">
+                    <button type="submit">Guardar</button>
+                </form>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Colaborador</th>
+                            <th>Fecha</th>
+                            <th>Total</th>
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+                <h3>Detalle Compra</h3>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Producto</th>
+                            <th>Cantidad</th>
+                            <th>Subtotal</th>
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+            </section>
+
+            <!-- VENTAS -->
+            <section id="seccionVentas" class="seccion">
+                <h2>Ventas</h2>
+                <form>
+                    <input type="hidden" name="idVenta">
+                    <label>Cliente:</label>
+                    <select name="idCliente"></select>
+                    <label>Colaborador:</label>
+                    <select name="idColaborador"></select>
+                    <label>Fecha:</label>
+                    <input type="date" name="fechaVenta">
+                    <label>Total:</label>
+                    <input type="number" name="totalVenta" step="0.01">
+                    <label>Forma de Pago:</label>
+                    <input type="text" name="formaPago">
+                    <button type="submit">Guardar</button>
+                </form>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Cliente</th>
+                            <th>Colaborador</th>
+                            <th>Fecha</th>
+                            <th>Total</th>
+                            <th>Forma de Pago</th>
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+                <h3>Detalle Venta</h3>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Producto</th>
+                            <th>Cantidad</th>
+                            <th>Subtotal</th>
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+            </section>
+
+            <!-- ROLES -->
+            <section id="seccionRoles" class="seccion">
+                <h2>Roles</h2>
+                <form id="formRol">
+                    <input type="hidden" id="idRolEdit" name="idRol">
+                    <label>Nombre Rol:</label>
+                    <input type="text" id="nombreRol" name="nombreRol" required>
+                    <button type="submit">Guardar</button>
+                    <button type="button" id="btnCancelarEditRol" style="display:none;">Cancelar</button>
+                </form>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Nombre Rol</th>
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody id="cuerpoTablaRoles"></tbody>
+                </table>
+            </section>
+
+            <!-- USUARIOS -->
+            <section id="seccionUsuarios" class="seccion">
+                <h2>Usuarios</h2>
+                <form id="formUsuario">
+                    <input type="hidden" id="idUsuarioEdit" name="idUsuario">
+                    <label>Usuario:</label>
+                    <input type="text" id="nombreUsuario" name="Usuario" required>
+                    <label>Password:</label>
+                    <input type="password" id="passwordUsuario" name="Password" required>
+                    <label>Estado:</label>
+                    <select id="estadoUsuario" name="EstadoUsuario" required>
+                        <option value="ACTIVO">ACTIVO</option>
+                        <option value="INACTIVO">INACTIVO</option>
+                    </select>
+                    <label>Email:</label>
+                    <input type="email" id="emailUsuario" name="email">
+                    <label>Rol:</label>
+                    <select id="rolUsuario" name="rol" required>
+                        <option value="">Seleccione un rol</option>
+                    </select>
+                    <button type="submit">Guardar</button>
+                    <button type="button" id="btnCancelarEditUsuario" style="display:none;">Cancelar</button>
+                </form>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Usuario</th>
+                            <th>Email</th>
+                            <th>Estado</th>
+                            <th>Fecha Registro</th>
+                            <th>Rol</th>
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody id="cuerpoTablaUsuarios"></tbody>
+                </table>
+            </section>
+
+            <!-- DEVOLUCIONES -->
+            <section id="seccionDevoluciones" class="seccion">
+                <h2>Devoluciones</h2>
+                <form>
+                    <input type="hidden" name="idDevolucion">
+                    <label>Detalle Venta:</label>
+                    <select name="idDetalleVenta"></select>
+                    <label>Cliente:</label>
+                    <select name="idCliente"></select>
+                    <label>Fecha Devolución:</label>
+                    <input type="date" name="fechaDevolucion">
+                    <label>Motivo:</label>
+                    <input type="text" name="motivo">
+                    <label>Cantidad Devuelta:</label>
+                    <input type="number" name="cantidadDevuelta">
+                    <label>Es Reembolso:</label>
+                    <input type="checkbox" name="esReembolso" value="1">
+                    <label>Aprobada Por:</label>
+                    <select name="aprobadaPor"></select>
+                    <button type="submit">Guardar</button>
+                </form>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Detalle Venta</th>
+                            <th>Cliente</th>
+                            <th>Fecha Devolución</th>
+                            <th>Motivo</th>
+                            <th>Cantidad Devuelta</th>
+                            <th>Es Reembolso</th>
+                            <th>Aprobada Por</th>
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+            </section>
+
+            <!-- MI CUENTA -->
+            <section id="seccionCuenta" class="seccion">
+                <h2>Mi Cuenta</h2>
+                <div>
+                    <label>Nombre:</label>
+                    <span id="nombreUsuario"></span>
+                </div>
+                <div>
+                    <label>Correo:</label>
+                    <span id="correoUsuario"></span>
+                </div>
+                <div>
+                    <label>Contraseña:</label>
+                    <span>********</span>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <!-- js general para el dashboard -->
+    <script src="/js/dashboard.js"></script>
+    <!-- js específico para roles -->
+    <script src="/js/roles.js"></script>
+    <!-- js específico para productos -->
+    <script src="/js/productos.js"></script>
+    <!-- js específico para categorías de producto -->
+    <script src="/js/categorias.js"></script>
+    <!-- js específico para clientes -->
+    <script src="/js/clientes.js"></script>
+    <!-- js específico para colaboradores -->
+    <script src="/js/colaboradores.js"></script>
+    <!-- js específico para proveedores -->
+    <script src="/js/proveedores.js"></script>
+    <!-- js específico para categoría membresía -->
+    <script src="/js/categoriaMembresia.js"></script>
+    <!-- js específico para membresías -->
+    <script src="/js/membresias.js"></script>
+    <!-- js específico para compras -->
+    <script src="/js/compras.js"></script>
+    <!-- js específico para ventas -->
+    <script src="/js/ventas.js"></script>
+    <!-- js específico para devoluciones -->
+    <script src="/js/devoluciones.js"></script>
+    <!-- js específico para usuarios -->
+    <script src="/js/usuarios.js"></script>
+    <!-- js específico para reportes (inicio) -->
+    <script src="/js/reportes.js"></script>
+</body>
+
+</html>

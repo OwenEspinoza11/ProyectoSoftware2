@@ -1,0 +1,7 @@
+ESTAS TENES QUE DESCARGAR
+
+flask
+flask-cors
+pyodbc
+werkzeug
+python-dotenv
