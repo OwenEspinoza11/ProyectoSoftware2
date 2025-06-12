@@ -1,5 +1,3 @@
-#ESTE NO DA TODAVIA 
-
 from flask import Blueprint, request, jsonify
 import pyodbc
 

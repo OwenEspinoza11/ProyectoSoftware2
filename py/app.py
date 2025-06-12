@@ -5,6 +5,7 @@ from login import login_bp
 from usuarios import usuarios_bp
 from colaborador import colaborador_bp
 from clientes import clientes_bp
+from categorias import categorias_bp
 
 
 #AQUI SE CARGAN TODOS LOS BLUEPRINTS EN EL DASHBOARD HTML
@@ -18,6 +19,8 @@ app.register_blueprint(login_bp)
 app.register_blueprint(usuarios_bp, url_prefix='/api')
 app.register_blueprint(colaborador_bp, url_prefix='/api')
 app.register_blueprint(clientes_bp, url_prefix='/api')
+app.register_blueprint(categorias_bp, url_prefix='/api')
+
 
 @app.route('/ping')
 def ping():

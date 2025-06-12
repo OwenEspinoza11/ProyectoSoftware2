@@ -7,10 +7,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Función para cargar los clientes
     function cargarClientes() {
-        fetch('/api/clientes')
+        fetch('http://127.0.0.1:5000/api/clientes')
             .then(res => res.json())
             .then(clientes => {
-                console.log(clientes); // <-- Agrega esto
+                console.log(clientes);
                 if (tbody) {
                     tbody.innerHTML = '';
                     clientes.forEach(cliente => {
@@ -31,7 +31,7 @@ document.addEventListener('DOMContentLoaded', () => {
                                 <button class="eliminar" data-id="${cliente.idCliente}">Eliminar</button>
                             </td>
                         `;
-                        console.log(tr.innerHTML); // <-- Agrega esto
+                        console.log(tr.innerHTML);
                         tbody.appendChild(tr);
                     });
                 }
@@ -44,11 +44,12 @@ document.addEventListener('DOMContentLoaded', () => {
             e.preventDefault();
             const formData = new FormData(form);
             const idCliente = formData.get('idCliente');
-            // Convertir estado a 'A' o 'I'
             const estado = formData.get('Estado') === 'ACTIVO' ? 'A' : 'I';
             formData.set('Estado', estado);
 
-            const url = idCliente ? `/api/clientes/${idCliente}` : '/api/clientes';
+            const url = idCliente
+                ? `http://127.0.0.1:5000/api/clientes/${idCliente}`
+                : 'http://127.0.0.1:5000/api/clientes';
             const method = idCliente ? 'PUT' : 'POST';
 
             fetch(url, {
@@ -69,7 +70,7 @@ document.addEventListener('DOMContentLoaded', () => {
         tbody.addEventListener('click', e => {
             if (e.target.classList.contains('editar')) {
                 const id = e.target.dataset.id;
-                fetch(`/api/clientes/${id}`)
+                fetch(`http://127.0.0.1:5000/api/clientes/${id}`)
                     .then(res => res.json())
                     .then(cliente => {
                         form.querySelector('[name="idCliente"]').value = cliente.idCliente;
@@ -86,7 +87,7 @@ document.addEventListener('DOMContentLoaded', () => {
             // Eliminar cliente
             if (e.target.classList.contains('eliminar')) {
                 const id = e.target.dataset.id;
-                fetch(`/api/clientes/${id}`, { method: 'DELETE' })
+                fetch(`http://127.0.0.1:5000/api/clientes/${id}`, { method: 'DELETE' })
                     .then(() => cargarClientes());
             }
         });
