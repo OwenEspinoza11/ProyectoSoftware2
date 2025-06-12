@@ -16,15 +16,15 @@
             <ul>
                 <li onclick="mostrarSeccion('seccionInicio')">Inicio</li>
                 <li onclick="mostrarSeccion('seccionProductos')">Productos</li>
-                <li onclick="mostrarSeccion('seccionCategorias')">Categorias</li>
+                <li onclick="mostrarSeccion('seccionCategorias')">Categorias productos</li>
                 <li onclick="mostrarSeccion('seccionClientes')">Clientes</li>
-                <li onclick="mostrarSeccion('seccionColaboradores')">Colaboradores</li>
                 <li onclick="mostrarSeccion('seccionProveedores')">Proveedores</li>
                 <li onclick="mostrarSeccion('seccionCategoriaMembresia')">Categoria membresías</li>
                 <li onclick="mostrarSeccion('seccionMembresias')">Membresías</li>
                 <li onclick="mostrarSeccion('seccionCompras')">Compras</li>
                 <li onclick="mostrarSeccion('seccionVentas')">Ventas</li>
                 <li onclick="mostrarSeccion('seccionDevoluciones')">Devoluciones</li>
+                <li onclick="mostrarSeccion('seccionColaboradores')">Colaboradores</li>
                 <li onclick="mostrarSeccion('seccionRoles')">Roles</li>
                 <li onclick="mostrarSeccion('seccionUsuarios')">Usuarios</li>
                 <li onclick="mostrarSeccion('seccionCuenta')">Mi Cuenta</li>
@@ -94,11 +94,12 @@
             <!-- CATEGORÍAS DE PRODUCTO -->
             <section id="seccionCategorias" class="seccion">
                 <h2>Categorías de Producto</h2>
-                <form>
-                    <input type="hidden" name="idCategoria">
+                <form id="formCategoria">
+                    <input type="hidden" id="idCategoriaEdit" name="idCategoria">
                     <label>Nombre:</label>
-                    <input type="text" name="nombreCategoria">
+                    <input type="text" id="nombreCategoria" name="nombreCategoria">
                     <button type="submit">Guardar</button>
+                    <button type="button" id="btnCancelarEditCategoria" style="display:none;">Cancelar</button>
                 </form>
                 <table>
                     <thead>
@@ -108,7 +109,7 @@
                             <th>Acciones</th>
                         </tr>
                     </thead>
-                    <tbody></tbody>
+                    <tbody id="cuerpoTablaCategorias"></tbody>
                 </table>
             </section>
 
