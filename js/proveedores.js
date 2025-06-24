@@ -1,3 +1,6 @@
+//CARGA PERO NO GUARDA NO SÉ POR QUÉ
+
+
 // JS para la sección Proveedores
 document.addEventListener('DOMContentLoaded', () => {
     const form = document.querySelector('#seccionProveedores form');
@@ -5,20 +8,21 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Función para cargar los proveedores
     function cargarProveedores() {
-        fetch('/api/proveedores')
+        fetch('http://127.0.0.1:5000/api/proveedores')
             .then(res => res.json())
-            .then(data => {
+            .then(proveedores => {
                 if (tbody) {
                     tbody.innerHTML = '';
-                    data.forEach(proveedor => {
+                    proveedores.forEach(proveedor => {
                         const tr = document.createElement('tr');
                         tr.innerHTML = `
                             <td>${proveedor.idProveedor}</td>
                             <td>${proveedor.nombreProveedor ?? ''}</td>
-                            <td>${proveedor.contacto ?? ''}</td>
-                            <td>${proveedor.telefono ?? ''}</td>
+                            <td>${proveedor.telefProveedor ?? ''}</td>
+                            <td>${proveedor.direccProveedor ?? ''}</td>
                             <td>
-                                <button data-id="${proveedor.idProveedor}" class="eliminar">Eliminar</button>
+                                <button class="editar" data-id="${proveedor.idProveedor}">Editar</button>
+                                <button class="eliminar" data-id="${proveedor.idProveedor}">Eliminar</button>
                             </td>
                         `;
                         tbody.appendChild(tr);
@@ -27,32 +31,38 @@ document.addEventListener('DOMContentLoaded', () => {
             });
     }
 
-    // Evento para agregar nuevo proveedor
+    // Agregar o actualizar proveedor
     if (form) {
         form.addEventListener('submit', e => {
             e.preventDefault();
             const formData = new FormData(form);
-            fetch('/api/proveedores', {
-                method: 'POST',
+            const idProveedor = formData.get('idProveedor');
+
+            const url = idProveedor
+                ? `http://127.0.0.1:5000/api/proveedores/${idProveedor}`
+                : 'http://127.0.0.1:5000/api/proveedores';
+            const method = idProveedor ? 'PUT' : 'POST';
+
+            fetch(url, {
+                method,
                 body: formData
             })
             .then(res => res.json())
             .then(() => {
                 form.reset();
+                form.querySelector('[name="idProveedor"]').value = '';
                 cargarProveedores();
             });
         });
     }
 
-    // Evento para eliminar proveedor
+    // Editar o eliminar proveedor
     if (tbody) {
         tbody.addEventListener('click', e => {
             if (e.target.classList.contains('eliminar')) {
                 const id = e.target.dataset.id;
-                fetch(`/api/proveedores/${id}`, {
-                    method: 'DELETE'
-                })
-                .then(() => cargarProveedores());
+                fetch(`http://127.0.0.1:5000/api/proveedores/${id}`, { method: 'DELETE' })
+                    .then(() => cargarProveedores());
             }
         });
     }
