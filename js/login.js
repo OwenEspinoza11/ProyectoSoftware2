@@ -18,6 +18,9 @@ document.addEventListener('DOMContentLoaded', function () {
     btn.disabled = true;
     btn.querySelector('.btn-text').textContent = "Autenticando...";
 
+    // Contador de intentos fallidos
+    let intentosFallidos = parseInt(localStorage.getItem('intentosFallidos')) || 0;
+
     fetch('http://127.0.0.1:5000/login', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
@@ -29,15 +32,37 @@ document.addEventListener('DOMContentLoaded', function () {
       })
       .then(data => {
         localStorage.setItem('usuario', JSON.stringify(data));
+        localStorage.removeItem('intentosFallidos');
         window.location.href = "dashboard.html";
       })
       .catch(error => {
-        alert(error.message);
+        intentosFallidos += 1;
+        localStorage.setItem('intentosFallidos', intentosFallidos);
+        if (intentosFallidos >= 3) {
+          alert("Ha superado el número máximo de intentos. Espere 10 segundos para volver a intentarlo.");
+          btn.disabled = true;
+          let countdown = 10;
+          btn.querySelector('.btn-text').textContent = `Espere ${countdown}s`;
+          const interval = setInterval(() => {
+            countdown--;
+            btn.querySelector('.btn-text').textContent = `Espere ${countdown}s`;
+            if (countdown <= 0) {
+              clearInterval(interval);
+              btn.disabled = false;
+              btn.querySelector('.btn-text').textContent = "Entrar";
+              localStorage.setItem('intentosFallidos', 0);
+            }
+          }, 1000);
+        } else {
+          alert(error.message);
+        }
         console.error("Error de login:", error);
       })
       .finally(() => {
-        btn.disabled = false;
-        btn.querySelector('.btn-text').textContent = "Entrar";
+        if (intentosFallidos < 3) {
+          btn.disabled = false;
+          btn.querySelector('.btn-text').textContent = "Entrar";
+        }
       });
   });
 });

@@ -1,3 +1,5 @@
+//PENDIENTE
+
 // JS para la sección Membresías
 document.addEventListener('DOMContentLoaded', () => {
     const form = document.querySelector('#seccionMembresias form');

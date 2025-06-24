@@ -1,5 +1,3 @@
-//ESTE NO DA TODAVIA
-
 // JS para la sección Clientes
 document.addEventListener('DOMContentLoaded', () => {
     const form = document.querySelector('#seccionClientes form');

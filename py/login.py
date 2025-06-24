@@ -2,6 +2,7 @@ from flask import Flask, request, jsonify, send_from_directory
 from flask_cors import CORS
 import pyodbc
 from flask import Blueprint
+import time
 
 app = Flask(__name__, static_folder='static', static_url_path='/static')
 

@@ -68,38 +68,56 @@
             <section id="seccionProductos" class="seccion">
                 <h2>Productos</h2>
                 <form>
-                    <label>Nombre: <input type="text" name="nombreProducto"></label>
-                    <label>Categoría: <input type="text" name="categoria"></label>
-                    <label>Precio: <input type="number" name="precio"></label>
-                    <label>Stock: <input type="number" name="stock"></label>
-                    <button type="submit">Agregar</button>
+                    <input type="hidden" name="idProducto">
+                    <label>Nombre:</label>
+                    <input type="text" name="NombreProducto">
+                    <label>Descripción:</label>
+                    <input type="text" name="descripcionProducto">
+                    <label>Categoría:</label>
+                    <select name="idCategoria"></select>
+                    <label>Proveedor:</label>
+                    <select name="idProveedor"></select>
+                    <label>Precio Venta:</label>
+                    <input type="number" name="precioProducto" step="0.01">
+                    <label>Costo:</label>
+                    <input type="number" name="Costoproducto" step="0.01">
+                    <label>Stock:</label>
+                    <input type="number" name="cantidadProducto">
+                    <label>Estado:</label>
+                    <select name="estadoProducto" required>
+                        <option value="ACTIVO">ACTIVO</option>
+                        <option value="INACTIVO">INACTIVO</option>
+                    </select>
+                    <button type="submit">Guardar</button>
                 </form>
                 <table>
                     <thead>
                         <tr>
                             <th>ID</th>
                             <th>Nombre</th>
+                            <th>Descripción</th>
                             <th>Categoría</th>
-                            <th>Precio</th>
+                            <th>Proveedor</th>
+                            <th>Precio Venta</th>
+                            <th>Costo</th>
                             <th>Stock</th>
+                            <th>Estado</th>
+                            <th>Fecha Ingreso</th>
                             <th>Acciones</th>
                         </tr>
                     </thead>
-                    <tbody>
-                        <!-- Filas generadas por JS -->
-                    </tbody>
+                    <tbody></tbody>
                 </table>
             </section>
 
             <!-- CATEGORÍAS DE PRODUCTO -->
             <section id="seccionCategorias" class="seccion">
                 <h2>Categorías de Producto</h2>
-                <form id="formCategoria">
-                    <input type="hidden" id="idCategoriaEdit" name="idCategoria">
+                <form>
+                    <input type="hidden" name="idCategoria">
                     <label>Nombre:</label>
-                    <input type="text" id="nombreCategoria" name="nombreCategoria">
+                    <input type="text" name="nombreCategoria">
                     <button type="submit">Guardar</button>
-                    <button type="button" id="btnCancelarEditCategoria" style="display:none;">Cancelar</button>
                 </form>
                 <table>
                     <thead>
@@ -109,7 +127,7 @@
                             <th>Acciones</th>
                         </tr>
                     </thead>
-                    <tbody id="cuerpoTablaCategorias"></tbody>
+                    <tbody></tbody>
                 </table>
             </section>
 
@@ -226,11 +244,11 @@
                     <input type="text" name="telefProveedor">
                     <label>Dirección:</label>
                     <input type="text" name="direccProveedor">
-                    <label>Estado:</label>
+                    <!-- <label>Estado:</label>
                     <select name="Estado" required>
                         <option value="ACTIVO">ACTIVO</option>
                         <option value="INACTIVO">INACTIVO</option>
-                    </select>
+                    </select> -->
                     <button type="submit">Guardar</button>
                 </form>
                 <table>
@@ -240,7 +258,7 @@
                             <th>Nombre</th>
                             <th>Teléfono</th>
                             <th>Dirección</th>
-                            <th>Estado</th>
+                            <!-- <th>Estado</th> -->
                             <th>Acciones</th>
                         </tr>
                     </thead>
