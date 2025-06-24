@@ -1,3 +1,6 @@
+//PENDIENTE
+
+
 // JS para la sección Compras
 document.addEventListener('DOMContentLoaded', () => {
     const form = document.querySelector('#seccionCompras form');

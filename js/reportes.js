@@ -1,3 +1,6 @@
+//PENDIENTE
+
+
 // Llama a tu backend para obtener los datos de los reportes
 document.addEventListener('DOMContentLoaded', function () {
     fetch('/api/reportes/dashboard')

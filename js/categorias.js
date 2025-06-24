@@ -1,117 +1,107 @@
 // JS para la sección Categorías de Producto
 document.addEventListener('DOMContentLoaded', () => {
-    const form = document.getElementById('formCategoria');
+    const form = document.querySelector('#seccionCategorias form');
+    const tbody = document.querySelector('#seccionCategorias table tbody');
 
+    // Función para cargar las categorías
     function cargarCategorias() {
         fetch('http://127.0.0.1:5000/api/categorias')
             .then(res => res.json())
-            .then(data => {
-                console.log(data); // <-- Agrega esto
-                const tbody = document.getElementById('cuerpoTablaCategorias');
-                tbody.innerHTML = '';
-                data.forEach(cat => {
-                    const tr = document.createElement('tr');
-                    tr.innerHTML = `
-                        <td>${cat.idCategoria}</td>
-                        <td>${cat.nombreCategoria}</td>
-                        <td>
-                            <button class="btn-editar" onclick="editarCategoria(${cat.idCategoria}, '${cat.nombreCategoria.replace(/'/g, "\\'")}')">Editar</button>
-                            <button class="btn-eliminar" onclick="eliminarCategoria(${cat.idCategoria})">Eliminar</button>
-                        </td>
-                    `;
-                    tbody.appendChild(tr);
-                });
+            .then(categorias => {
+                console.log(categorias);
+                if (tbody) {
+                    tbody.innerHTML = '';
+                    categorias.forEach(cat => {
+                        const tr = document.createElement('tr');
+                        tr.innerHTML = `
+                            <td>${cat.idCategoria}</td>
+                            <td>${cat.nombreCategoria ?? ''}</td>
+                            <td>
+                                <button class="editar" data-id="${cat.idCategoria}">Editar</button>
+                                <button class="eliminar" data-id="${cat.idCategoria}">Eliminar</button>
+                            </td>
+                        `;
+                        tbody.appendChild(tr);
+                    });
+                }
             })
             .catch(error => console.error('Error:', error));
     }
 
-    form.addEventListener('submit', e => {
-        e.preventDefault();
-        const idEdit = document.getElementById('idCategoriaEdit').value;
-        const nombre = document.getElementById('nombreCategoria').value.trim();
+    // Agregar o actualizar categoría
+    if (form) {
+        form.addEventListener('submit', e => {
+            e.preventDefault();
+            const formData = new FormData(form);
+            const idCategoria = formData.get('idCategoriaEdit');
+            const nombreCategoria = formData.get('nombreCategoria')?.trim();
 
-        if (!nombre) {
-            alert('Por favor ingrese un nombre válido para la categoría');
-            return;
-        }
+            if (!nombreCategoria) {
+                alert('Por favor ingrese un nombre válido para la categoría');
+                return;
+            }
 
-        if (idEdit) {
-            actualizarCategoria(idEdit, nombre);
-        } else {
-            agregarCategoria(nombre);
-        }
-    });
+            const url = idCategoria
+                ? `http://127.0.0.1:5000/api/categorias/${idCategoria}`
+                : 'http://127.0.0.1:5000/api/categorias';
+            const method = idCategoria ? 'PUT' : 'POST';
+            const body = JSON.stringify({ nombreCategoria });
 
-    document.getElementById('btnCancelarEditCategoria').addEventListener('click', resetFormCategoria);
+            fetch(url, {
+                method,
+                headers: { 'Content-Type': 'application/json' },
+                body
+            })
+            .then(res => res.json())
+            .then(data => {
+                alert(data.mensaje || (idCategoria ? 'Categoría actualizada' : 'Categoría agregada'));
+                form.reset();
+                form.querySelector('[name="idCategoriaEdit"]').value = '';
+                const btnCancelar = form.querySelector('#btnCancelarEditCategoria');
+                if (btnCancelar) btnCancelar.style.display = 'none';
+                cargarCategorias();
+            })
+            .catch(error => console.error('Error:', error));
+        });
+    }
 
-    document.getElementById('cuerpoTablaCategorias').addEventListener('click', e => {
-        if (e.target.classList.contains('btn-eliminar')) {
-            const id = e.target.closest('button').getAttribute('onclick').match(/\d+/)[0];
-            eliminarCategoria(id);
-        }
-        // Puedes agregar aquí el evento para editar si lo deseas
-    });
+    // Editar o eliminar categoría
+    if (tbody) {
+        tbody.addEventListener('click', e => {
+            if (e.target.classList.contains('editar')) {
+                const id = e.target.dataset.id;
+                fetch(`http://127.0.0.1:5000/api/categorias/${id}`)
+                    .then(res => res.json())
+                    .then(cat => {
+                        form.querySelector('[name="idCategoriaEdit"]').value = cat.idCategoria;
+                        form.querySelector('[name="nombreCategoria"]').value = cat.nombreCategoria ?? '';
+                        const btnCancelar = form.querySelector('#btnCancelarEditCategoria');
+                        if (btnCancelar) btnCancelar.style.display = 'inline-block';
+                        form.querySelector('[name="nombreCategoria"]').focus();
+                    });
+            }
+            if (e.target.classList.contains('eliminar')) {
+                const id = e.target.dataset.id;
+                if (!confirm('¿Está seguro de eliminar esta categoría?')) return;
+                fetch(`http://127.0.0.1:5000/api/categorias/${id}`, { method: 'DELETE' })
+                    .then(res => res.json())
+                    .then(data => {
+                        alert(data.mensaje || 'Categoría eliminada');
+                        cargarCategorias();
+                    });
+            }
+        });
+    }
+
+    // Cancelar edición
+    const btnCancelar = document.querySelector('#btnCancelarEditCategoria');
+    if (btnCancelar) {
+        btnCancelar.addEventListener('click', () => {
+            form.reset();
+            form.querySelector('[name="idCategoriaEdit"]').value = '';
+            btnCancelar.style.display = 'none';
+        });
+    }
 
     cargarCategorias();
 });
-
-function agregarCategoria(nombre) {
-    fetch('http://127.0.0.1:5000/api/categorias', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ nombreCategoria: nombre })
-    })
-    .then(response => response.json())
-    .then(data => {
-        alert(data.mensaje || 'Categoría agregada');
-        resetFormCategoria();
-        document.getElementById('cuerpoTablaCategorias').innerHTML = '';
-        cargarCategorias();
-    })
-    .catch(error => console.error('Error:', error));
-}
-
-function actualizarCategoria(id, nombre) {
-    fetch(`http://127.0.0.1:5000/api/categorias/${id}`, {
-        method: 'PUT',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ nombreCategoria: nombre })
-    })
-    .then(response => response.json())
-    .then(data => {
-        alert(data.mensaje || 'Categoría actualizada');
-        resetFormCategoria();
-        cargarCategorias();
-    })
-    .catch(error => console.error('Error:', error));
-}
-
-function eliminarCategoria(id) {
-    if (!confirm('¿Está seguro de eliminar esta categoría?')) return;
-
-    fetch(`http://127.0.0.1:5000/api/categorias/${id}`, {
-        method: 'DELETE'
-    })
-    .then(response => response.json())
-    .then(data => {
-        alert(data.mensaje || 'Categoría eliminada');
-        cargarCategorias();
-    })
-    .catch(error => console.error('Error:', error));
-}
-
-function editarCategoria(id, nombre) {
-    document.getElementById('idCategoriaEdit').value = id;
-    document.getElementById('nombreCategoria').value = nombre;
-    document.getElementById('btnCancelarEditCategoria').style.display = 'inline-block';
-    document.getElementById('nombreCategoria').focus();
-}
-
-function resetFormCategoria() {
-    document.getElementById('formCategoria').reset();
-    document.getElementById('idCategoriaEdit').value = '';
-    document.getElementById('btnCancelarEditCategoria').style.display = 'none';
-}
-
-window.editarCategoria = editarCategoria;
-window.eliminarCategoria = eliminarCategoria;

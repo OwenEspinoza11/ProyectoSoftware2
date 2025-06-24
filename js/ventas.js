@@ -1,3 +1,5 @@
+//PENDIENTE
+
 // JS para la sección Ventas
 document.addEventListener('DOMContentLoaded', () => {
     const form = document.querySelector('#seccionVentas form');

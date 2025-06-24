@@ -1,3 +1,5 @@
+//PENDIENTE
+
 // JS para la sección Categoría Membresía
 
 document.addEventListener('DOMContentLoaded', () => {
