@@ -27,6 +27,9 @@ CREATE TABLE Usuario (
     FOREIGN KEY (idRol) REFERENCES Rol(idRol)
 );
 
+UPDATE Usuario
+SET Password = CONVERT(VARCHAR(32), HASHBYTES('MD5', Password), 2);
+
 select * from Usuario
 
 INSERT INTO Usuario(Usuario,Password,EstadoUsuario,email,idRol) VALUES('Owen', '4321', 'ACTIVO', 'owen@gmail.com',1);

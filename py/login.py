@@ -3,6 +3,7 @@ from flask_cors import CORS
 import pyodbc
 from flask import Blueprint
 import time
+import hashlib
 
 app = Flask(__name__, static_folder='static', static_url_path='/static')
 
@@ -30,6 +31,9 @@ def login():
     usuario = data.get('Usuario')
     contrasena = data.get('Password')
 
+    # Hashear la contraseña con MD5
+    contrasena_md5 = hashlib.md5(contrasena.encode('utf-8')).hexdigest()
+
     conn = get_db_connection()
     cursor = conn.cursor()
     cursor.execute("""
@@ -37,7 +41,7 @@ def login():
         FROM Usuario U
         JOIN Rol R ON U.idRol = R.idRol
         WHERE U.Usuario = ? AND U.Password = ?
-    """, (usuario, contrasena))
+    """, (usuario, contrasena_md5))
 
     user = cursor.fetchone()
     conn.close()
